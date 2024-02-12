@@ -1,12 +1,33 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button } from './Button'
+import axios from 'axios';
 
 export const RecentItems = () => {
-  const [buttonsState, setButtonsState] = useState({
-    button1: true,
-    button2: false,
-    button3: false
-  });
+  const [topMenus, setTopMenus] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios.get('http://localhost:8080/api/menus/toploves');
+        setTopMenus(res.data);
+      } catch (err) {
+        console.error('Error fetching data:', err);
+      }
+    };
+
+    fetchData();
+    console.log(topMenus)
+  }, []);
+
+  const [buttonsState, setButtonsState] = useState({});
+
+  useEffect(() => {
+    const initialState = {};
+    topMenus.forEach((menu, index) => {
+      initialState[`button${index + 1}`] = false;
+    });
+    setButtonsState(initialState);
+  }, [topMenus]);
 
   const handleClick = (buttonName) => {
     setButtonsState(prevState => ({
@@ -15,23 +36,20 @@ export const RecentItems = () => {
     }));
   };
 
+
+
   return (
     <div className='flex overflow-x-auto whitespace-nowrap space-x-3'>
-       <Button 
-         onClick={() => handleClick('button1')}
-         name='Mie Aceh'
-         backgroundColor={buttonsState.button1}
-       />
-       <Button 
-         onClick={() => handleClick('button2')}
-         name='Es Vanilla Blue'
-         backgroundColor={buttonsState.button2}
-       />
-       <Button 
-         onClick={() => handleClick('button3')}
-         name='Mochi'
-         backgroundColor={buttonsState.button3}
-       />
+      {topMenus.map((menu, index) => (
+        <Button 
+          key={index}
+          onClick={() => handleClick(`button${index + 1}`)}
+          name={menu.nama_menu}
+          backgroundColor={buttonsState[`button${index + 1}`]}
+        />
+      ))}
     </div>
   )
 }
+
+

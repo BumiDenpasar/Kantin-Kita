@@ -8,7 +8,6 @@ import Menu from './pages/Menu';
 import Pesanan from './pages/Pesanan';
 import Profil from './pages/Profil';
 import 'typeface-montserrat';
-import { Navbar } from './component/Navbar';
 
 const router = createBrowserRouter([
   {
@@ -33,6 +32,5 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <RouterProvider router={router} />
-    <Navbar />
   </React.StrictMode>
 );

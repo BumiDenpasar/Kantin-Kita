@@ -1,20 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
 import pickupIcon from "../assets/pickup-icon.png"
 import deliveryIcon from "../assets/delivery-icon.png"
+import { Button } from "./Button";
 
 const PickupMethod = () =>{
-   
+    const [buttonsState, setButtonsState] = useState({
+        pickup: true,
+        delivery: false,
+      });
+    
+      const handleClick = (buttonName) => {
+        setButtonsState(prevState => ({
+          pickup: buttonName === 'pickup' ? true : false,
+          delivery: buttonName === 'delivery' ? true : false
+        }));
+      };
 
     return (
         <div className="flex space-x-3">
-            <button className="bg-main flex items-center space-x-2 text-sm text-white font-semibold px-5 py-3 rounded-md w-max">
-                <img src={pickupIcon} className="h-7" alt="pickup icon" />
-                <h3>Pickup</h3>
-            </button>
-            <button className="bg-main flex items-center space-x-2 text-sm text-white font-semibold px-5 py-3 rounded-md w-max">
-                <img src={deliveryIcon} className="h-6" alt="delivery icon" />
-                <h3>Delivery</h3>
-            </button>
+            <Button 
+                onClick={() => handleClick('pickup')}
+                img={pickupIcon}
+                name='Pickup'
+                space='2'
+                backgroundColor={buttonsState.pickup}
+            />
+            <Button 
+                onClick={() => handleClick('delivery')}
+                img={deliveryIcon}
+                name='Delivery'
+                space='2'
+                backgroundColor={buttonsState.delivery}
+            />
         </div>
 
     )

@@ -17,7 +17,6 @@ export const SuggestedItem = () => {
                 <PickupMethod />
             </div>
             <h2 className='mt-4 mb-5 font-semibold text-lg text-neutral-300 tracking-wide'>Total : Rp. 5000</h2>
-
             <Button 
             w='full'
             backgroundColor
